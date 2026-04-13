@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计素材网</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+/* 绿色自然主题 CSS */
+:root {
+    --fluent-bg: rgba(255, 255, 255, 0.1);
+    --fluent-bg-light: rgba(255, 255, 255, 0.2);
+    --fluent-card: rgba(255, 255, 255, 0.7);
+    --fluent-card-hover: rgba(255, 255, 255, 0.85);
+    --fluent-accent: #2d6a4f;
+    --fluent-accent-light: #40916c;
+    --fluent-text: #1b4332;
+    --fluent-text-secondary: rgba(27, 67, 50, 0.7);
+    --fluent-border: rgba(45, 106, 79, 0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: url('bg.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    color: #1a3a2a;
+    overflow-x: hidden;
+}
+
+/* 亚克力背景层 */
+.acrylic-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 120, 212, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(64, 224, 208, 0.1) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 头部样式 */
+.header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--fluent-border);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #1b4332, #2d6a4f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+.search-box {
+    flex: 1;
+    max-width: 500px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--fluent-border);
+    border-radius: 4px;
+    color: var(--fluent-text);
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--fluent-accent);
+    box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.3);
+}
+
+.search-box input::placeholder {
+    color: var(--fluent-text-secondary);
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background: var(--fluent-accent);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #1b4332;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(45, 106, 79, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--fluent-border);
+    color: var(--fluent-text);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* 分类导航栏 */
+.category-nav {
+    position: sticky;
+    top: 73px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--fluent-border);
+    padding: 12px 40px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    z-index: 99;
+}
+
+.category-nav::-webkit-scrollbar {
+    height: 4px;
+}
+
+.category-nav::-webkit-scrollbar-thumb {
+    background: var(--fluent-accent);
+    border-radius: 2px;
+}
+
+.category-nav-item {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--fluent-border);
+    border-radius: 4px;
+    color: var(--fluent-text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.category-nav-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--fluent-text);
+}
+
+.category-nav-item.active {
+    background: var(--fluent-accent);
+    border-color: var(--fluent-accent);
+    color: white;
+}
+
+/* 主内容区 */
+.main-content {
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.category-section {
+    margin-bottom: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-left: 16px;
+    border-left: 4px solid var(--fluent-accent);
+}
+
+.category-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--fluent-text);
+    letter-spacing: -0.5px;
+}
+
+/* 不同类型分类的左边框颜色 - 绿色系 */
+.category-section[data-category="AI工具"] .category-header { border-left-color: #2d6a4f; }
+.category-section[data-category="PPT学习"] .category-header { border-left-color: #40916c; }
+.category-section[data-category="图片素材"] .category-header { border-left-color: #52b788; }
+.category-section[data-category="矢量图标"] .category-header { border-left-color: #74c69d; }
+.category-section[data-category="在线工具"] .category-header { border-left-color: #95d5b2; }
+.category-section[data-category="常用"] .category-header { border-left-color: #1b4332; }
+
+/* 卡片网格 */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .main-content { padding: 20px; }
+    .header { padding: 16px 20px; flex-wrap: wrap; }
+    .category-nav { padding: 12px 20px; }
+}
+
+/* 卡片样式 - 玻璃效果 */
+.nav-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    min-height: 280px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+}
+
+.nav-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(45, 106, 79, 0.5);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(45, 106, 79, 0.2);
+}
+
+.nav-card.editable .edit-actions {
+    display: flex;
+}
+
+.edit-actions {
+    display: none;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--fluent-border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* 图标样式 */
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.3s;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(45, 106, 79, 0.2);
+}
+
+.nav-card:hover .icon-wrapper {
+    transform: scale(1.05);
+    border-color: rgba(45, 106, 79, 0.5);
+    box-shadow: 0 0 20px rgba(45, 106, 79, 0.2);
+}
+
+.icon-wrapper img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.icon-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d6a4f;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--fluent-text);
+    margin-bottom: 8px;
+}
+
+.card-desc {
+    font-size: 0.9rem;
+    color: var(--fluent-text-secondary);
+}
+
+/* 模态框 */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--fluent-text);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--fluent-text-secondary);
+    margin-bottom: 8px;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--fluent-border);
+    border-radius: 4px;
+    color: var(--fluent-text);
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--fluent-accent);
+    box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.3);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.form-actions .btn {
+    flex: 1;
+}
+</style>
+</head>
+<body>
+    <div class="acrylic-bg"></div>
+    
+
+    <div class="acrylic-bg"></div>
+    
+
+    <header class="header">
+        <div class="logo">🧭 设计素材网</div>
+        <div class="search-box">
+            <input type="text" id="searchBox" placeholder="搜索网站...">
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" id="addBtn">
+                <span>+</span> 添加
+            </button>
+            <button class="btn btn-secondary" id="manageBtn">
+                <span>⚙️</span> 管理
+            </button>
+        </div>
+    </header>
+    
+    <!-- 分类导航栏 -->
+    <nav class="category-nav" id="categoryNav"></nav>
+    
+    <main class="main-content" id="mainContent"></main>
+    
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3 class="modal-title" id="modalTitle">添加网站</h3>
+            
+            <button class="fetch-btn" id="fetchBtn" type="button">
+                <span>🌐</span> 联网获取网站信息
+            </button>
+            
+            <div class="preview-box" id="previewBox">
+                <div class="preview-icon">
+                    <img id="previewFavicon" src="" alt="">
+                </div>
+                <div class="preview-info">
+                    <div class="preview-title" id="previewTitle">-</div>
+                    <div class="preview-desc" id="previewDesc">-</div>
+                </div>
+            </div>
+            
+            <form id="siteForm">
+                <input type="hidden" id="siteId">
+                <div class="form-group">
+                    <label class="form-label">网站链接</label>
+                    <input type="url" class="form-input" id="siteUrl" placeholder="https://example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">网站名称</label>
+                    <input type="text" class="form-input" id="siteName" placeholder="自动获取或手动输入" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">简介</label>
+                    <input type="text" class="form-input" id="siteDesc" placeholder="自动获取或手动输入">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">分类</label>
+                    <select class="form-select" id="siteCategory" required>
+                        <option value="AI工具">🤖 AI工具</option>
+                        <option value="PPT学习">📊 PPT学习</option>
+                        <option value="图片素材">🖼️ 图片素材</option>
+                        <option value="矢量图标">🔣 矢量图标</option>
+                        <option value="在线工具">⚙️ 在线工具</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 后端API地址
+        const API_BASE = 'http://localhost:5000';
+        
+        // 默认书签数据（从bookmarks_2026_4_9.html解析）
+        const defaultBookmarks = [
+            {"name": "百度一下", "url": "https://www.baidu.com/", "domain": "baidu.com", "category": "常用", "desc": "搜索引擎"},
+            {"name": "超星学习通", "url": "http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com", "domain": "chaoxing.com", "category": "常用", "desc": "在线教育"},
+            {"name": "花瓣网", "url": "https://huaban.com/", "domain": "huaban.com", "category": "常用", "desc": "设计灵感"},
+            {"name": "Iconfont", "url": "https://www.iconfont.cn/", "domain": "iconfont.cn", "category": "常用", "desc": "矢量图标库"},
+            {"name": "DeepSeek", "url": "https://chat.deepseek.com/", "domain": "deepseek.com", "category": "AI工具", "desc": "AI深度思考"},
+            {"name": "即梦AI", "url": "https://jimeng.jianying.com/ai-tool/home?workspace=0", "domain": "jimeng.jianying.com", "category": "AI工具", "desc": "AI创作平台"},
+            {"name": "豆包", "url": "https://www.doubao.com/chat/?channel=baidu_pz&from_login=1", "domain": "doubao.com", "category": "AI工具", "desc": "字节AI助手"},
+            {"name": "星流", "url": "https://www.xingliu.art/", "domain": "xingliu.art", "category": "AI工具", "desc": "AI设计Agent"},
+            {"name": "可灵AI", "url": "https://klingai.com/app", "domain": "klingai.com", "category": "AI工具", "desc": "AI视频创作"},
+            {"name": "扣子", "url": "https://www.coze.cn/", "domain": "coze.cn", "category": "AI工具", "desc": "AI智能体平台"},
+            {"name": "讯飞星火", "url": "https://xinghuo.xfyun.cn/", "domain": "xinghuo.xfyun.cn", "category": "AI工具", "desc": "国产大模型"},
+            {"name": "猫弦云", "url": "http://mvip.wiki/", "domain": "mvip.wiki", "category": "工具", "desc": "节点服务"},
+            {"name": "猫弦节点", "url": "https://maoxian.wiki/#/dashboard", "domain": "maoxian.wiki", "category": "工具", "desc": "节点管理"},
+            {"name": "魔戒", "url": "https://mojie.app/dashboard", "domain": "mojie.app", "category": "工具", "desc": "网络工具"},
+            {"name": "旁门左道", "url": "https://www.pangmenzd.vip/", "domain": "pangmenzd.vip", "category": "PPT学习", "desc": "PPT教程"},
+            {"name": "旁友圈", "url": "https://quanzi.xiaoe-tech.com/", "domain": "quanzi.xiaoe-tech.com", "category": "PPT学习", "desc": "PPT社群"},
+            {"name": "Convertio", "url": "https://convertio.co/zh/", "domain": "convertio.co", "category": "PPT学习", "desc": "文件转换"},
+            {"name": "GitHub", "url": "https://github.com/", "domain": "github.com", "category": "PPT学习", "desc": "代码托管"},
+            {"name": "Freepik", "url": "https://www.freepik.com/", "domain": "freepik.com", "category": "配色", "desc": "矢量图资源"},
+            {"name": "配色表", "url": "https://www.58pic.com/peisebiao", "domain": "58pic.com", "category": "配色", "desc": "色彩搭配"},
+            {"name": "Eva Design", "url": "https://colors.eva.design/", "domain": "colors.eva.design", "category": "配色", "desc": "深度学习配色"},
+            {"name": "uiGradients", "url": "https://uigradients.com/", "domain": "uigradients.com", "category": "配色", "desc": "渐变色方案"},
+            {"name": "WebGradients", "url": "https://webgradients.com/", "domain": "webgradients.com", "category": "配色", "desc": "背景渐变"},
+            {"name": "中国色", "url": "https://www.zhongguose.com/", "domain": "zhongguose.com", "category": "配色", "desc": "传统颜色"},
+            {"name": "ColorDrop", "url": "https://colordrop.io/", "domain": "colordrop.io", "category": "配色", "desc": "配色方案"},
+            {"name": "字体天下", "url": "https://www.fonts.net.cn/", "domain": "fonts.net.cn", "category": "字体", "desc": "中英文字体"},
+            {"name": "求字体网", "url": "https://www.qiuziti.com/", "domain": "qiuziti.com", "category": "字体", "desc": "字体识别"},
+            {"name": "书法字体", "url": "http://www.shufaziti.com/", "domain": "shufaziti.com", "category": "字体", "desc": "书法字体"},
+            {"name": "字体传奇", "url": "http://www.ziticq.com/", "domain": "ziticq.com", "category": "字体", "desc": "字体交流"},
+            {"name": "字体宇宙", "url": "https://www.fontspace.com/", "domain": "fontspace.com", "category": "字体", "desc": "免费字体下载"},
+            {"name": "锐字工房", "url": "http://www.reeji.com/", "domain": "reeji.com", "category": "字体", "desc": "潮牌字库"},
+            {"name": "造字工房", "url": "https://www.makefont.com/", "domain": "makefont.com", "category": "字体", "desc": "字体设计"},
+            {"name": "100font", "url": "https://www.100font.com/", "domain": "100font.com", "category": "字体", "desc": "免费商用字体"},
+            {"name": "360查字体", "url": "https://fonts.safe.360.cn/", "domain": "fonts.safe.360.cn", "category": "字体", "desc": "字体版权查询"},
+            {"name": "模板王字库", "url": "http://fonts.mobanwang.com/", "domain": "fonts.mobanwang.com", "category": "字体", "desc": "字体下载"},
+            {"name": "Subtle Patterns", "url": "https://www.toptal.com/designers/subtlepatterns/", "domain": "toptal.com", "category": "背景", "desc": "纹理背景"},
+            {"name": "Transparent", "url": "https://www.transparenttextures.com/", "domain": "transparenttextures.com", "category": "背景", "desc": "透明纹理"},
+            {"name": "背景生成器", "url": "http://www.bg-painter.com/", "domain": "bg-painter.com", "category": "背景", "desc": "背景生成"},
+            {"name": "Remove.bg", "url": "https://www.remove.bg/zh", "domain": "remove.bg", "category": "图片处理", "desc": "AI抠图"},
+            {"name": "Pixian", "url": "https://pixian.ai/", "domain": "pixian.ai", "category": "图片处理", "desc": "AI抠图软件"},
+            {"name": "创可贴", "url": "https://www.chuangkit.com/koutu", "domain": "chuangkit.com", "category": "图片处理", "desc": "在线抠图"},
+            {"name": "Bigjpg", "url": "https://bigjpg.com/", "domain": "bigjpg.com", "category": "图片处理", "desc": "图片放大"},
+            {"name": "ImgUpscaler", "url": "https://imgupscaler.com/zh-tw", "domain": "imgupscaler.com", "category": "图片处理", "desc": "图片放大"},
+            {"name": "RestorePhotos", "url": "https://www.restorephotos.io/", "domain": "restorephotos.io", "category": "图片处理", "desc": "AI修复照片"},
+            {"name": "MagicStudio", "url": "https://magicstudio.com/zh/", "domain": "magicstudio.com", "category": "图片处理", "desc": "更换背景"},
+            {"name": "Unsplash", "url": "https://unsplash.com/", "domain": "unsplash.com", "category": "图片素材", "desc": "无版权摄影"},
+            {"name": "Foodiesfeed", "url": "https://www.foodiesfeed.com/", "domain": "foodiesfeed.com", "category": "图片素材", "desc": "食物照片"},
+            {"name": "VisualHunt", "url": "https://visualhunt.com/", "domain": "visualhunt.com", "category": "图片素材", "desc": "免费图库"},
+            {"name": "摄图网", "url": "https://699pic.com/", "domain": "699pic.com", "category": "图片素材", "desc": "正版图片"},
+            {"name": "包图网", "url": "https://ibaotu.com/?spm=uisdc", "domain": "ibaotu.com", "category": "图片素材", "desc": "1.5亿素材"},
+            {"name": "PNG素材库", "url": "https://pngimg.com/", "domain": "pngimg.com", "category": "图片素材", "desc": "PNG素材"},
+            {"name": "全历史", "url": "https://www.allhistory.com/", "domain": "allhistory.com", "category": "图片素材", "desc": "艺术作品"},
+            {"name": "Pixabay", "url": "https://pixabay.com/zh/", "domain": "pixabay.com", "category": "图片素材", "desc": "免费高清图片"},
+            {"name": "沙沙野", "url": "https://ssyer.com/", "domain": "ssyer.com", "category": "图片素材", "desc": "图片分享"},
+            {"name": "Storyset", "url": "https://storyset.com/", "domain": "storyset.com", "category": "插画", "desc": "高质量插画"},
+            {"name": "Undraw", "url": "https://undraw.co/illustrations", "domain": "undraw.co", "category": "插画", "desc": "场景插图"},
+            {"name": "Emojipedia", "url": "https://emojipedia.org/", "domain": "emojipedia.org", "category": "表情", "desc": "Emoji表情"},
+            {"name": "Icons8", "url": "https://icons8.com/", "domain": "icons8.com", "category": "表情", "desc": "2D/3D图标"},
+            {"name": "ARC腾讯修图", "url": "https://arc.tencent.com/zh/ai-demos/faceRestoration", "domain": "arc.tencent.com", "category": "修图", "desc": "AI修图"},
+            {"name": "Iconfont图标", "url": "https://www.iconfont.cn/", "domain": "iconfont.cn", "category": "图标", "desc": "阿里图标库"},
+            {"name": "Flaticon", "url": "https://www.flaticon.com/", "domain": "flaticon.com", "category": "图标", "desc": "矢量图标"},
+            {"name": "Iconfinder", "url": "https://www.iconfinder.com/", "domain": "iconfinder.com", "category": "图标", "desc": "图标搜索"},
+            {"name": "IconPark", "url": "https://iconpark.oceanengine.com/home", "domain": "iconpark.oceanengine.com", "category": "图标", "desc": "字节图标库"},
+            {"name": "IconStore", "url": "https://iconstore.co/", "domain": "iconstore.co", "category": "图标", "desc": "可爱图标"},
+            {"name": "Flat-icon", "url": "http://flat-icon-design.com/", "domain": "flat-icon-design.com", "category": "图标", "desc": "长阴影图标"}
+        ];
+
+        let bookmarks = [];
+        let isManageMode = false;
+        let fetchedData = null;
+
+        // 获取分类对应的class
+        function getCategoryClass(category) {
+            const map = {
+                'AI工具': 'category-ai',
+                'PPT学习': 'category-ppt',
+                '图片素材': 'category-images',
+                '矢量图标': 'category-icons',
+                '在线工具': 'category-tools',
+                '常用': 'category-tools'
+            };
+            return map[category] || 'category-tools';
+        }
+
+        // 获取favicon URL (使用稳定服务)
+        function getFaviconUrl(domain) {
+            // 使用favicon.im服务，支持跨域且稳定
+            return `https://favicon.im/${domain}`;
+        }
+
+        // 加载数据
+        function loadData() {
+            const saved = localStorage.getItem('myNavBookmarks_v4');
+            if (saved) {
+                bookmarks = JSON.parse(saved);
+            } else {
+                bookmarks = [...defaultBookmarks];
+                saveData();
+            }
+        }
+
+        // 保存数据
+        function saveData() {
+            localStorage.setItem('myNavBookmarks_v4', JSON.stringify(bookmarks));
+        }
+
+        // 按分类分组
+        function groupByCategory() {
+            const groups = {};
+            bookmarks.forEach(site => {
+                if (!groups[site.category]) groups[site.category] = [];
+                groups[site.category].push(site);
+            });
+            return groups;
+        }
+
+        // 创建卡片
+        function createCard(site, index) {
+            const safeId = encodeURIComponent(site.url).replace(/[^a-zA-Z0-9]/g, '_');
+            const categoryClass = getCategoryClass(site.category);
+            const iconUrl = getFaviconUrl(site.domain);
+            
+            return `
+                <div class="nav-card ${isManageMode ? 'editable' : ''} ${categoryClass}" data-id="${safeId}" style="animation-delay: ${index * 0.02}s">
+                    ${isManageMode ? `
+                        <div class="edit-actions">
+                            <button class="edit-btn" onclick="editSite('${safeId}')">✏️</button>
+                            <button class="delete-btn" onclick="deleteSite('${safeId}')">🗑️</button>
+                        </div>
+                    ` : ''}
+                    <a href="${site.url}" target="_blank" class="card-link">
+                        <div class="icon-wrapper">
+                            <img src="${iconUrl}" alt="${site.name}" class="site-icon" 
+                                onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?domain=${site.domain}&sz=128'; this.onerror=function(){this.style.display='none'; this.parentElement.innerHTML='<div class=\\'icon-fallback\\'>${site.name.charAt(0).toUpperCase()}</div>';}">
+                        </div>
+                        <div class="card-title">${site.name}</div>
+                        <div class="card-desc">${site.desc || site.domain}</div>
+                    </a>
+                </div>
+            `;
+        }
+
+        // 当前选中的分类
+        let currentCategory = '全部';
+
+        // 渲染分类导航
+        function renderCategoryNav() {
+            const groups = groupByCategory();
+            const categories = ['全部', ...Object.keys(groups)];
+            const nav = document.getElementById('categoryNav');
+            
+            nav.innerHTML = categories.map(cat => `
+                <button class="category-nav-item ${cat === currentCategory ? 'active' : ''}" 
+                        onclick="switchCategory('${cat}')">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        // 切换分类
+        function switchCategory(category) {
+            currentCategory = category;
+            renderCategoryNav();
+            render();
+        }
+
+        // 渲染页面
+        function render() {
+            const groups = groupByCategory();
+            const container = document.getElementById('mainContent');
+            container.innerHTML = '';
+
+            if (currentCategory === '全部') {
+                // 显示所有分类
+                Object.keys(groups).forEach((category, catIndex) => {
+                    renderCategorySection(container, category, groups[category]);
+                });
+            } else {
+                // 只显示选中的分类
+                if (groups[currentCategory]) {
+                    renderCategorySection(container, currentCategory, groups[currentCategory], true);
+                }
+            }
+        }
+
+        // 渲染单个分类区域
+        function renderCategorySection(container, category, sites, isSingle = false) {
+            const section = document.createElement('section');
+            section.className = 'category-section';
+            section.setAttribute('data-category', category);
+            section.innerHTML = `
+                ${isSingle ? '' : `
+                <div class="category-header">
+                    <h2 class="category-title">${category}</h2>
+                </div>
+                `}
+                <div class="cards-grid">
+                    ${sites.map((site, idx) => createCard(site, idx)).join('')}
+                </div>
+            `;
+            container.appendChild(section);
+        }
+
+        function getCategoryColor(category) {
+            const colors = {
+                'AI工具': 'linear-gradient(135deg, #c7d2fe, #a5b4fc)',
+                'PPT学习': 'linear-gradient(135deg, #fed7aa, #fdba74)',
+                '图片素材': 'linear-gradient(135deg, #bbf7d0, #86efac)',
+                '矢量图标': 'linear-gradient(135deg, #fde68a, #fcd34d)',
+                '在线工具': 'linear-gradient(135deg, #bae6fd, #7dd3fc)',
+                '常用': 'linear-gradient(135deg, #e2e8f0, #cbd5e1)'
+            };
+            return colors[category] || colors['常用'];
+        }
+
+        function getCategoryEmoji(category) {
+            const emojis = {
+                'AI工具': '🤖',
+                'PPT学习': '📊',
+                '图片素材': '🖼️',
+                '矢量图标': '🔣',
+                '在线工具': '⚙️',
+                '常用': '📌'
+            };
+            return emojis[category] || '📎';
+        }
+
+        // 搜索
+        function handleSearch(query) {
+            const term = query.toLowerCase();
+            document.querySelectorAll('.nav-card').forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+                card.style.display = (title.includes(term) || desc.includes(term)) ? 'block' : 'none';
+            });
+        }
+
+        // 切换管理模式
+        function toggleManageMode() {
+            isManageMode = !isManageMode;
+            document.getElementById('manageBtn').classList.toggle('active', isManageMode);
+            renderCategoryNav();
+            render();
+        }
+
+        // 打开模态框
+        function openModal(isEdit = false) {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('modalTitle').textContent = isEdit ? '编辑网站' : '添加网站';
+            document.getElementById('previewBox').classList.remove('active');
+            fetchedData = null;
+            
+            if (!isEdit) {
+                document.getElementById('siteForm').reset();
+                document.getElementById('siteId').value = '';
+            }
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            fetchedData = null;
+        }
+
+        // 联网获取网站信息
+        async function fetchSiteInfo() {
+            const url = document.getElementById('siteUrl').value.trim();
+            if (!url) {
+                showToast('请先输入网站链接');
+                return;
+            }
+
+            const btn = document.getElementById('fetchBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/fetch-site?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    fetchedData = data;
+                    
+                    // 填充表单
+                    document.getElementById('siteName').value = data.title || '';
+                    document.getElementById('siteDesc').value = data.description || '';
+                    
+                    // 显示预览
+                    document.getElementById('previewFavicon').src = data.favicon || getFaviconUrl(data.domain);
+                    document.getElementById('previewTitle').textContent = data.title || '未知标题';
+                    document.getElementById('previewDesc').textContent = data.description || data.domain;
+                    document.getElementById('previewBox').classList.add('active');
+                    
+                    showToast('✅ 获取成功！');
+                } else {
+                    showToast('❌ ' + (data.error || '获取失败'));
+                }
+            } catch (error) {
+                showToast('❌ 连接后端服务失败，请确保服务已启动 (python server.py)');
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        }
+
+        // 编辑网站
+        function editSite(safeId) {
+            const site = bookmarks.find(s => encodeURIComponent(s.url).replace(/[^a-zA-Z0-9]/g, '_') === safeId);
+            if (!site) return;
+            
+            document.getElementById('siteId').value = safeId;
+            document.getElementById('siteUrl').value = site.url;
+            document.getElementById('siteName').value = site.name;
+            document.getElementById('siteDesc').value = site.desc || '';
+            document.getElementById('siteCategory').value = site.category;
+            
+            // 显示预览
+            document.getElementById('previewFavicon').src = getFaviconUrl(site.domain);
+            document.getElementById('previewTitle').textContent = site.name;
+            document.getElementById('previewDesc').textContent = site.desc || site.domain;
+            document.getElementById('previewBox').classList.add('active');
+            
+            openModal(true);
+        }
+
+        // 删除网站
+        function deleteSite(safeId) {
+            if (!confirm('确定要删除这个网站吗？')) return;
+            
+            bookmarks = bookmarks.filter(s => encodeURIComponent(s.url).replace(/[^a-zA-Z0-9]/g, '_') !== safeId);
+            saveData();
+            renderCategoryNav();
+            render();
+            showToast('🗑️ 已删除');
+        }
+
+        // 保存网站
+        function saveSite(e) {
+            e.preventDefault();
+            
+            const url = document.getElementById('siteUrl').value.trim();
+            const name = document.getElementById('siteName').value.trim();
+            const desc = document.getElementById('siteDesc').value.trim();
+            const category = document.getElementById('siteCategory').value;
+            const siteId = document.getElementById('siteId').value;
+            
+            let domain = '';
+            try {
+                domain = new URL(url).hostname.replace('www.', '');
+            } catch {
+                showToast('❌ 无效的URL');
+                return;
+            }
+            
+            const siteData = {
+                name: name || domain,
+                url: url,
+                domain: domain,
+                category: category,
+                desc: desc || (fetchedData ? fetchedData.description : domain)
+            };
+            
+            if (siteId) {
+                // 编辑模式
+                const index = bookmarks.findIndex(s => encodeURIComponent(s.url).replace(/[^a-zA-Z0-9]/g, '_') === siteId);
+                if (index !== -1) {
+                    bookmarks[index] = siteData;
+                }
+            } else {
+                // 添加模式
+                bookmarks.push(siteData);
+            }
+            
+            saveData();
+            renderCategoryNav();
+            render();
+            closeModal();
+            showToast(siteId ? '✅ 更新成功！' : '✅ 添加成功！');
+        }
+
+        // 显示提示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // 初始化
+        function init() {
+            loadData();
+            renderCategoryNav();
+            render();
+            
+            document.getElementById('addBtn').onclick = () => openModal();
+            document.getElementById('manageBtn').onclick = toggleManageMode;
+            document.getElementById('cancelBtn').onclick = closeModal;
+            document.getElementById('fetchBtn').onclick = fetchSiteInfo;
+            document.getElementById('siteForm').onsubmit = saveSite;
+            document.getElementById('searchBox').oninput = (e) => handleSearch(e.target.value);
+            document.getElementById('modalOverlay').onclick = (e) => {
+                if (e.target === e.currentTarget) closeModal();
+            };
+        }
+
+        init();
+    </script>
+</body>
+</html>
